@@ -1,0 +1,106 @@
+<style>
+  body {
+    background-color: #BAD3FF;
+    text-align: center;
+    box-sizing: border-box;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  .header {
+    width: 100vw;
+    height: 30px;
+    background-color: #0066FF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+  }
+
+  .header__title {
+    color: white;
+    line-height: 35px;
+    font-size: 25px;
+    text-align: center;
+  }
+
+  .flash {
+    color: white;
+    background-color: #CC6633;
+    opacity: 0.8;
+    position: fixed;
+  	top: 30px;
+  	left: 0;
+  	width: 100%;
+    text-align: center;
+  }
+
+  .login__img {
+    margin-top: 100px;
+    margin-bottom: 50px;
+    height: 100px;
+  }
+
+  .btn {
+    height: 35px;
+    width: 100px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+  }
+
+  .login__form {
+    background-color: white;
+    width: 320px;
+    border-radius: 5px;
+    margin: 0 auto;
+    padding: 15px 100px;
+    text-align: left;
+    box-shadow: 2px 2px 2px silver;
+  }
+
+  .login__form--list {
+    padding-bottom: 10px;
+  }
+
+  .login__form--list input {
+    font-size: 18px;
+    width: 300px;
+    padding: 5px;
+  }
+
+  .login-btn {
+    margin-top: 10px;
+    width: 98%
+  }
+
+
+  
+</style>
+
+<div class="header">
+  <div class="header__title">森永乳業　羽島販売店</div>
+</div>
+
+<% if flash[:notice] %>
+  <div class="flash"><%= flash[:notice] %></div>
+<% end %>
+
+<img class="login__img" src="https://school.oohara.jp/rtakagi/milk.png" alt="">
+<%= form_with(scope: :session, local: true )  do |f| %>
+<ul class="login__form">
+  <li class="login__form--list">
+    <%= f.label :email, 'メールアドレス' %>
+    <%= f.text_field :email %>
+  </li>
+  <li class="login__form--list">
+    <%= f.label :password, 'パスワード' %>
+    <%= f.password_field :password %>
+  </li>
+  <li>
+    <input class="btn login-btn" type="submit" value="ログイン">
+  </li>
+</ul>
+<% end %>

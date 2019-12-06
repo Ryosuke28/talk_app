@@ -1,0 +1,30 @@
+<% user = User.find_by(id: post.user_id) %>
+<div class="post">
+	<%= image_tag "/images/#{user.image}" %>
+	<div>
+		<%= link_to user.name, user_path(user), class: "name" %>
+		<span><%= post.updated_at %></span>
+		<div class="text-content"><%= auto_link(simple_format post.content) %></div>
+		<div class="good-btn">
+			<% @good_count = Favorite.where(post_id: post.id, likes: 1).count %>
+			<% @favorite = Favorite.find_by(post_id: post.id, user_id: session[:user_id]) %>
+			<% if @favorite == nil || @favorite.likes == 0 %>
+				<a class="good" href="/favorites/good?id=<%= post.id %>"><i class="fas fa-heart"></i> <%= @good_count %></a>
+			<% elsif @favorite.likes == 1 %>
+				<a class="good" href="/favorites/good?id=<%= post.id %>"><i class="fas fa-heart red"></i> <%= @good_count %></a>
+			<% end %>
+			<% if @favorite == nil || @favorite.favorites == 0 %>
+				<a class="folder" href="/favorites/favorite?id=<%= post.id %>"><i class="fas fa-folder"></i></a>
+			<% elsif @favorite.favorites == 1 %>
+				<a class="folder" href="/favorites/favorite?id=<%= post.id %>"><i class="fas fa-folder yellow"></i></a>
+			<% end %>
+		</div>
+		<% if post.user_id == session[:user_id] %>
+			<div class="edit-btn">
+				<a class="postedit" onclick = "window.edit('<%= post.content %>', '<%= post.id %>')">編集</a>
+				<%= link_to '削除', post, method: :delete, remote: true, data: { confirm: "投稿を削除します。よろしいですか？" }, class: 'delete' %>
+			</div>
+		<% end %>
+		<div class="clear"></div>
+	</div>
+</div>

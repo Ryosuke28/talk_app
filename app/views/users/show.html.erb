@@ -1,0 +1,385 @@
+<style>
+  body {
+    background-color: #BAD3FF;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .btn {
+    height: 35px;
+    width: 100px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+
+  .check {
+    display: none;
+    border: 1px solid silver;
+    background-color: white;
+    width: 400px;
+    padding: 10px 30px;
+    font-size: 30px;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+
+  .yesno {
+    float: right;
+  }
+
+  .yesno input {
+    height: 35px;
+    width: 100px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+  }
+
+  .yesno input:hover {
+    background-color: blue;
+    transition: 0.2s;
+  }
+
+  .editpost {
+    display: none;
+    background-color: white;
+    width: 500px;
+    height: 265px;
+    border: 1px solid silver;
+    border-radius: 10px;
+    position: fixed;
+    top: calc(50% - 133px);
+    left: calc(50% - 250px);
+    z-index: 12;
+  }
+
+  .close {
+    display: block;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 3px;
+    padding-right: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid silver;
+  }
+
+  .close p {
+    float: right;
+    margin: 0;
+  }
+
+  .close p:hover {
+    cursor: default;
+  }
+
+  .editpost img {
+    height: 60px;
+    border-radius: 35px;
+    vertical-align: top;
+    margin: 0 10px 0 20px;
+  }
+
+  .editpost textarea {
+    border: 1px solid silver;
+    height: 120px;
+    width: 72%;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+  }
+
+  .editpost input {
+    margin: 5px 32px 15px 0;
+    height: 40px;
+    width: 120px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+    float: right;
+  }
+
+  .editpost input:hover {
+    background-color: blue;
+    transition: 0.2s;
+  }
+
+
+
+  .user-details {
+    display: flex;
+    width: 650px;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 50px;
+  }
+
+  .user-details img {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+    border-radius: 50px;
+    margin-left: 30px;
+    align-self: center;
+  }
+
+  .user-details ul {
+    font-size: 25px;
+    margin-right: 50px;
+    margin-left: 20px;
+  }
+
+  .detail-exit-btn {
+    align-self: flex-end;
+    text-align: center;
+    line-height: 35px;
+  }
+
+  .tab {
+    padding: 0;
+    height: 30px;
+  }
+
+  .tab li {
+    display: inline-block;
+    background-color: #eeeeee;
+    width: 18%;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    border: 1px solid silver;
+    float: left;
+    margin-right: 5px;
+    cursor: default;
+  }
+
+  .tab li.active {
+    border-bottom: 1px solid white;
+    background-color: white;
+  }
+
+
+  .post-contents {
+    position: relative;
+    left: calc(100vw-250px);
+    margin: 0 auto;
+    width: 500px;
+  }
+
+  .my-post, .my-good, .my-favorite {
+    display: none;
+  }
+
+  .show {
+    display: block;
+  }
+
+  .post {
+    border: 1px solid silver;
+    border-top: none;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .post img {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 35px;
+    vertical-align: top;
+    margin: 15px 20px 0 15px;
+  }
+
+  .name {
+    display: inline-block;
+    margin: 20px 20px 10px 0;
+    font-size: 20px;
+  }
+
+  .text-content {
+    width: 365px;
+    font-size: 20px;
+    border: 0;
+    background-color: white;
+    word-wrap: break-word;
+  }
+
+  .text-content a {
+    color: blue;
+  }
+
+  .post span {
+    color: #555;
+  }
+
+  .good-btn {
+    float: left;
+  }
+
+  .edit-btn {
+    float: right;
+  }
+
+  .good-btn a, .edit-btn a {
+    margin: 15px 0 10px 10px;
+    display: inline-block;
+  }
+
+  .edit-btn a:hover, .name:hover {
+    color: blue;
+    text-decoration: underline;
+  }
+
+  .good:hover {
+    color: red;
+  }
+
+  .folder:hover {
+    color: #FF9900;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .yellow {
+    color: #FF9900;
+  }
+
+  
+
+</style>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="editpost">
+  <div class="close">
+    <p>×</p>
+    <div class="clear"></div>
+  </div>
+  <div>
+    <%= form_tag "/posts/change", method: :post do %>
+      <input type="hidden" id="id" name="id" value="">
+      <%= image_tag "/images/#{current_user.image}" %>
+      <textarea id="content" value="" name="content" placeholder="内容をどうぞ"></textarea>
+      <input type="submit" value="投 稿">
+    <% end %>
+  </div>
+  <div class="clear"></div>
+</div>
+
+  
+
+
+
+<div class="user-details">
+	<%= image_tag "/images/#{@user.image}" %>
+  <div>
+    <ul>
+      <li><%= @user.name %></li>
+      <li>mail:<%= @user.email %></li>
+      <li>tel:<%= @user.tel %></li>
+    </ul>
+  </div>
+  <!-- <input class="btn detail-exit-btn" type="submit" value="編　集"> -->
+  <% if @user == current_user %>
+    <%= link_to "編　集", edit_user_path(@user), class: "btn detail-exit-btn" %>
+  <% end %>
+</div>
+
+<div class="post-contents">
+  <ul class="tab">
+    <li class="active">投稿</li>
+    <li>いいね</li>
+    <li class="tab-favorite">お気に入り</li>
+  </ul>
+  <div class="tab-bodys">
+    <div class=" tab-body my-post show">
+      <% @my_posts.each do |post| %>
+        <%= render partial: 'posts/eachpost', locals: {post: post} %>
+      <% end %>
+    </div>
+
+    <div class="tab-body my-good">
+      <% @my_likes.each do |like| %>
+        <% post = Post.find_by(id: like.post_id) %>
+        <%= render partial: 'posts/eachpost', locals: {post: post} %>
+      <% end %>
+    </div>
+
+    <div class="tab-body my-favorite">
+      <% @my_favorites.each do |favorite| %>
+        <% post = Post.find_by(id: favorite.post_id) %>
+        <%= render partial: 'posts/eachpost', locals: {post: post} %>
+      <% end %>
+    </div>
+
+    <div style="height:30px"></div>
+
+  </div>
+</div>
+
+<script>
+function deete(id){
+  $('#delete-id').val(id);
+  $('.check').fadeIn();
+  $('.overlay').fadeIn();
+}
+
+$('.cansel').click(function(){
+  $('.check').fadeOut();
+  $('.overlay').fadeOut();
+});
+
+$('.overlay').click(function(){
+  $('.check').fadeOut();
+  $('.editpost').fadeOut();
+  $('.overlay').fadeOut();
+});
+
+
+
+$('.tab li').click(function(){
+  const index = $('.tab li').index(this);
+  $('.tab li').removeClass('active');
+  $(this).addClass('active');
+  $('.tab-body').removeClass('show');
+  $('.tab-body').eq(index).addClass('show');
+});
+
+function edit(value, id){
+  $('#content').val(value);
+  $('#id').val(id);
+  $('.editpost').fadeIn();
+  $('.overlay').fadeIn();
+  }
+
+$('.close p').click(function(){
+  $('.editpost').fadeOut();
+  $('.overlay').fadeOut();
+});
+
+</script>

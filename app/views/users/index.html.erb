@@ -1,0 +1,116 @@
+<style>
+  body {
+    background-color: #BAD3FF;
+    width: 100vw;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+  .page-title {
+    font-size: 30px;
+    margin-left: 10%;
+    padding-top: 50px;
+    font-weight: bold;
+    color: blue;
+    float: left;
+  }
+
+  .user {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    width: 450px;
+    height: 100px;
+    border: 1px solid silver;
+    border-top: 0;
+    margin: 0 auto;
+  }
+
+  .user img {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 35px;
+    margin-left: 30px;
+  }
+
+  .user-name {
+    width: 180px;
+    font-size: 25px;
+    margin-left: 30px;
+    margin-top: 5px;
+  }
+
+  .user-btn {
+    margin-left: 30px;
+    width: 160px;
+  }
+
+  .btn {
+    height: 35px;
+    width: 100px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+  }
+
+  .entry-btn {
+    width: 200px;
+    margin-top: 80px;
+    margin-right: 50px;
+    float: right;
+    cursor: normal;
+    text-align: center;
+    line-height: 38px;
+  }
+
+  .admin-btn {
+    display: inline-block;
+    width: 100px;
+    text-align: center;
+    line-height: 38px;
+    cursor: pointer;
+  }
+
+  
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="container">
+  <h1 class="page-title">ユーザー一覧</h1>
+  <% if current_user.admin? %>
+    <%= link_to '新規ユーザー登録', new_user_path, class: 'btn entry-btn' %>
+  <% end %>
+  <div class="clear"></div>
+  <div class="users">
+    <% @users.each do |user| %>
+      <div class="user">
+        <%= image_tag "/images/#{user.image}" %>
+        <div class="user-name">
+          <%= link_to user.name, user_path(user) %>
+        </div>
+        <% if current_user.admin? && user != current_user %>
+          <div class="user-btn">
+            <%= link_to("/users/#{user.id}/admin") do %>
+              <% if user.admin? %>
+                <div class="btn admin-btn">管理者</div>
+              <% else %>
+                <div class="btn admin-btn">権限付与</div>
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>
+

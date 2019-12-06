@@ -1,0 +1,313 @@
+<style>
+  body {
+    background-color: #BAD3FF;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .check {
+    display: none;
+    border: 1px solid silver;
+    background-color: white;
+    width: 400px;
+    padding: 10px 30px;
+    font-size: 30px;
+    border-radius: 5px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+  }
+
+  .yesno {
+    float: right;
+  }
+
+  .yesno input {
+    height: 35px;
+    width: 100px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+  }
+
+  .yesno input:hover {
+    background-color: blue;
+    transition: 0.2s;
+  }
+
+  .editpost {
+    display: none;
+    background-color: white;
+    width: 500px;
+    height: 265px;
+    border: 1px solid silver;
+    border-radius: 10px;
+    position: fixed;
+    top: calc(50% - 133px);
+    left: calc(50% - 250px);
+    z-index: 12;
+  }
+
+  .close {
+    display: block;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 3px;
+    padding-right: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid silver;
+  }
+
+  .close p {
+    float: right;
+    margin: 0;
+  }
+
+  .close p:hover {
+    cursor: default;
+  }
+
+  .editpost img {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 35px;
+    vertical-align: top;
+    margin: 0 10px 0 20px;
+  }
+
+  .editpost textarea {
+    border: 1px solid silver;
+    height: 120px;
+    width: 72%;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px;
+  }
+
+  .editpost input {
+    margin: 5px 32px 15px 0;
+    height: 40px;
+    width: 120px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+    float: right;
+  }
+
+  .editpost input:hover {
+    background-color: blue;
+    transition: 0.2s;
+  }
+
+  .page-title {
+    font-size: 30px;
+    margin-left: 10%;
+    padding-top: 50px;
+    font-weight: bold;
+    color: blue;
+  }
+
+  .post-contents {
+    position: relative;
+    left: calc(100vw-250px);
+    margin: 0 auto;
+    width: 500px;
+  }
+
+  .post {
+    border: 1px solid silver;
+    border-top: none;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    overflow: hidden;
+  }
+
+  .post a {
+    text-decoration: none;
+    color: black;
+  }
+
+  .post img {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    border-radius: 35px;
+    vertical-align: top;
+    margin: 15px 20px 0 15px;
+  }
+
+  .name {
+    display: inline-block;
+    margin: 20px 20px 10px 0;
+    font-size: 20px;
+  }
+
+  .text-content {
+    width: 365px;
+    font-size: 20px;
+    border: 0;
+    background-color: white;
+    word-wrap: break-word;
+  }
+
+  .text-content p {
+    margin: 0;
+  }
+
+  .text-content a {
+    color: blue;
+  }
+
+  .post span {
+    color: #555;
+  }
+
+  .good-btn {
+    float: left;
+  }
+
+  .edit-btn {
+    float: right;
+  }
+
+  .good-btn a, .edit-btn a {
+    margin: 15px 0 10px 10px;
+    display: inline-block;
+  }
+
+  .edit-btn a:hover, .name:hover {
+    color: blue;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .good i:hover {
+    color: red;
+  }
+
+  .folder i:hover {
+    color: #FF9900;
+  }
+
+  .red {
+    color: red;
+  }
+
+  .yellow {
+    color: #FF9900;
+  }
+
+  .clear {
+    clear: both;
+  }
+
+  @media (max-width: 767px){
+    .page-title {
+      padding-top: 20px;
+    }
+
+    .check {
+      width: 300px;
+    }
+
+    .post-contents {
+      width: 310px;
+    }
+
+    .post img {
+      height: 30px;
+      width: 30px;
+      object-fit: cover;
+      margin: 10px 10px 0 10px;
+    }
+
+    .post span {
+      font-size: 13px;
+    }
+
+    .name {
+      margin: 15px 10px 0 0;
+      font-size: 16px;
+    }
+
+    .text-content {
+      width: 230px;
+      font-size: 16px;
+    }
+
+    .good-btn a, .edit-btn a {
+      margin: 5px 0 5px 5px;
+    }
+
+  }
+</style>
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="container">
+  <div class="page-title">投稿一覧</div>
+
+  <div class="editpost">
+    <div class="close">
+      <p>×</p>
+      <div class="clear"></div>
+    </div>
+  <div>
+    <%= form_tag "/posts/change", method: :post do %>
+      <input type="hidden" id="id" name="id" value="">
+      <%= image_tag "/images/#{current_user.image}" %>
+      <textarea id="content" value="" name="content" placeholder="内容をどうぞ"></textarea>
+      <input type="submit" value="投 稿">
+    <% end %>
+  </div>
+  <div class="clear"></div>
+  </div>
+
+
+
+
+
+
+  <div class="post-contents">
+    <% @posts.each do |post| %>
+      <%= render partial: 'eachpost', locals: {post: post} %>
+    <% end %>
+    <div style="height:30px"></div>
+
+  </div>
+</div>
+
+<script>
+
+
+
+$('.cansel').click(function(){
+  $('.check').fadeOut();
+  $('.overlay').fadeOut();
+});
+
+$('.overlay').click(function(){
+  $('.check').fadeOut();
+  $('.editpost').fadeOut();
+  $('.overlay').fadeOut();
+});
+
+
+//$('.postedit').click(function(){
+function edit(value, id){
+  $('#content').val(value);
+  $('#id').val(id);
+  $('.editpost').fadeIn();
+  $('.overlay').fadeIn();
+  }
+
+$('.close p').click(function(){
+  $('.editpost').fadeOut();
+  $('.overlay').fadeOut();
+});
+</script>

@@ -1,0 +1,141 @@
+<style>
+  body {
+    background-color: #BAD3FF;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    box-sizing: border-box;
+  }
+
+  ul {
+    list-style: none;
+  }
+
+  .page-title {
+    font-size: 30px;
+    margin-left: 10%;
+    padding-top: 50px;
+    font-weight: bold;
+    color: blue;
+  }
+
+  .btn {
+    height: 35px;
+    width: 100px;
+    background-color: #0066FF;
+    color: white;
+    font-size: 20px;
+  }
+
+  .img-btn {
+    width: 130px;
+    font-size: 16px;
+    position: absolute;
+    top: 145px;
+    left: 500px;
+  }
+
+  .edit-box {
+    margin: 0 auto;
+    width: 800px;
+    text-align: center;
+    position: relative;
+  }
+
+  .edit-box img {
+    height: 180px;
+    width: 180px;
+    object-fit: cover;
+    border-radius: 90px;
+  }
+
+  .edit-box ul {
+    width: 470px;
+    margin: 0 auto;
+    font-size: 20px;
+    padding: 10px 0 20px;
+  }
+
+  .edit-box li {
+    padding-top: 10px;
+  }
+
+  .edit-box label {
+    margin-right: 10px;
+    width: 200px;
+    float: left;
+    text-align: right;
+    font-weight: bold;
+    padding-top: 5px;
+  }
+
+  .edit-box li input {
+    font-size: 20px;
+    padding: 5px;
+  }
+
+  .entry-btn {
+    margin-left: 350px;
+  }
+
+
+  
+</style>
+
+<div class="container">
+  <h1 class="page-title">新規ユーザー作成</h1>
+	<%= form_with model: @user, multipart: true, local: true do |f| %>
+    <div class="edit-box">
+			<%= image_tag "/images/#{@user.image}", id: "image" %>
+      
+      <% @user.errors.full_messages.each do |message| %>
+				<div class="form-error">
+					<%= message %>
+				</div>
+			<% end %>
+
+
+
+      <ul>
+        <li>
+					<%= f.label :name, 'アカウント名' %>
+					<%= f.text_field :name, placeholder: "アカウント名" %>
+        </li>
+        <li>
+					<%= f.label :email, 'メールアドレス' %>
+					<%= f.text_field :email, placeholder: "Mail address" %>
+        </li>
+        <li>
+					<%= f.label :tel, '電話番号' %>
+					<%= f.text_field :tel, placeholder: "Tell" %>
+        </li>
+        <li>
+					<%= f.label :password, 'パスワード' %>
+					<%= f.password_field :password, placeholder: "Password" %>
+        </li>
+				<li>
+					<%= f.label :password_confirmation, 'パスワード(確認)' %>
+					<%= f.password_field :password_confirmation, placeholder: "Password" %>
+				</li>
+      </ul>
+			<%= f.submit "保　存", class:"btn entry-btn" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  function image_change(file){
+    var filename = file.files[0];
+    var type = ['image/jpeg', 'image/png', 'image/gif'];
+    if(filename && type.indexOf(filename.type) == -1){
+      alert("この形式のファイルはアップロードできません");
+      file.value = "";
+      return;
+    }
+    var r = new FileReader();
+    r.onload = function(){
+      $("#image").attr("src", this.result);
+    }
+    r.readAsDataURL(filename);
+  }
+</script>
